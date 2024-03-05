@@ -9,8 +9,11 @@ inputs:
     description: 'The SSH port to use. Defaults to `22`.'
     required: true
     default: '22'
+  source:
+    description: 'The directory that should be used as the copy-source.'
+    required: true
   target:
-    description: 'The directory that should be used on the copy-target. Will be `/app/deploy/<target>` and `/app/data/<target>`.'
+    description: 'The directory that should be used on the copy-target.'
     required: true
   user:
     description: 'The SSH user that will be used to connect to the host.'
