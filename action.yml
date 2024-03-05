@@ -1,5 +1,5 @@
-name: 'Deploy a directory using SSH and execute a script'
-description: 'Connects to a server via SSH and copies / runs scripts to / on the target'
+name: 'Deploy a directory using SSH'
+description: 'Connects to a server via SSH and copies scripts to the target'
 inputs:
   key-name:
     description: 'Name of the file the private key is temporarily saved in. Defaults to `identity`.'
