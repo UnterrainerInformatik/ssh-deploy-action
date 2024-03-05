@@ -1,0 +1,37 @@
+name: 'Deploy a directory using SSH and execute a script'
+description: 'Connects to a server via SSH and copies / runs scripts to / on the target'
+inputs:
+  key-name:
+    description: 'Name of the file the private key is temporarily saved in. Defaults to `identity`.'
+    required: true
+    default: 'identity'
+  port:
+    description: 'The SSH port to use. Defaults to `22`.'
+    required: true
+    default: '22'
+  target:
+    description: 'The directory that should be used on the copy-target. Will be `/app/deploy/<target>` and `/app/data/<target>`.'
+    required: true
+  user:
+    description: 'The SSH user that will be used to connect to the host.'
+    required: true
+  host:
+    description: 'The SSH-server (host) to connect to.'
+    required: true
+  chmod-mask:
+    description: 'The mask to set using chmod before deploying the source files.'
+    required: true
+    default: '777'
+  chmod-selector:
+    description: 'The selector (e.g. `./deploy/*.sh`) to use when chmodding.'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Use SSH - chmod <mask> <selector>
+      shell: bash
+      if: "${{ inputs.chmod-mask != '' && inputs.chmod-selector != '' }}"
+      run: sudo chmod ${{ inputs.chmod-mask }} ${{ inputs.target }}/${{ inputs.chmod-selector }}
+    - name: Use SSH - rsync deploy dir to target
+      shell: bash
+      run: rsync -azh -e 'ssh -i .ssh/${{ inputs.key-name }} -p '"${{ inputs.port }}"'' ${{ inputs.source }} ${{ inputs.user }}@${{ inputs.host }}:${{ inputs.target }}/
