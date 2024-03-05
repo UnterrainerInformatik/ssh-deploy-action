@@ -34,7 +34,7 @@ runs:
     - name: Use SSH - chmod <mask> <selector>
       shell: bash
       if: "${{ inputs.chmod-mask != '' && inputs.chmod-selector != '' }}"
-      run: sudo chmod ${{ inputs.chmod-mask }} ${{ inputs.target }}/${{ inputs.chmod-selector }}
+      run: sudo chmod ${{ inputs.chmod-mask }} ${{ inputs.chmod-selector }}
     - name: Use SSH - rsync deploy dir to target
       shell: bash
       run: rsync -azh -e 'ssh -i .ssh/${{ inputs.key-name }} -p '"${{ inputs.port }}"'' ${{ inputs.source }} ${{ inputs.user }}@${{ inputs.host }}:${{ inputs.target }}/
