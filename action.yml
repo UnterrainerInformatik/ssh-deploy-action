@@ -37,4 +37,4 @@ runs:
       run: sudo chmod ${{ inputs.chmod-mask }} ${{ inputs.chmod-selector }}
     - name: Use SSH - rsync deploy dir to target
       shell: bash
-      run: rsync -azh -e 'ssh -i .ssh/${{ inputs.key-name }} -p '"${{ inputs.port }}"'' ${{ inputs.source }} ${{ inputs.user }}@${{ inputs.host }}:${{ inputs.target }}/
+      run: rsync -azh -e 'ssh -o ConnectTimeout=20 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -i .ssh/${{ inputs.key-name }} -p '"${{ inputs.port }}"'' ${{ inputs.source }} ${{ inputs.user }}@${{ inputs.host }}:${{ inputs.target }}/
